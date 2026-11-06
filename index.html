@@ -278,6 +278,48 @@ h1 i,h2 i,h3 i,.ph .pn{font-style:normal}
 .sec.primeiro{margin-top:28px}
 @media(min-width:980px){.sec.primeiro{margin-top:48px}}
 .hero{border-top:1px solid var(--line);margin-top:56px}
+
+/* Detalhe do produto */
+html.travado{overflow:hidden}
+.det{border:0;padding:0;margin:0;max-width:none;max-height:none;width:100%;height:100%;background:transparent;color:var(--ink)}
+.det[open]{display:flex;align-items:flex-end;justify-content:center}
+.det::backdrop{background:rgba(18,12,13,.55);backdrop-filter:blur(3px)}
+.det-box{position:relative;width:100%;max-height:92vh;background:var(--bg);border-radius:24px 24px 0 0;overflow:hidden;display:flex;flex-direction:column;animation:sobe .28s cubic-bezier(.2,.8,.2,1)}
+@keyframes sobe{from{transform:translateY(40px);opacity:.4}to{transform:none;opacity:1}}
+@media(min-width:860px){.det[open]{align-items:center}.det-box{max-width:980px;border-radius:28px;max-height:88vh;margin:0 24px}}
+.det-x{position:absolute;top:12px;right:12px;z-index:3;width:40px;height:40px;border-radius:50%;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.det-c{outline:none;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:calc(20px + env(safe-area-inset-bottom,0px))}
+@media(min-width:860px){.det-c{display:grid;grid-template-columns:1fr 1fr;padding-bottom:0}}
+.d-ft{border-radius:0;aspect-ratio:1/1;max-height:46vh;width:100%}
+@media(min-width:860px){.d-ft{aspect-ratio:auto;max-height:none;height:100%;min-height:520px}}
+.d-ft img{object-fit:contain;background:#fff}
+.badge .full{background:var(--season);color:var(--on-dark)}
+.d-inf{padding:22px 20px 8px;display:flex;flex-direction:column;gap:14px;min-width:0}
+@media(min-width:860px){.d-inf{padding:36px 32px;overflow-y:auto;max-height:88vh}}
+.d-inf h2{font-family:var(--f-serif);font-weight:800;font-size:clamp(24px,6vw,32px);line-height:1.08;letter-spacing:-.03em;margin-top:-6px}
+.prova{font-size:14px;font-weight:500}
+.prova .stars{color:#E0A100}
+.mut{color:var(--ink-3);font-weight:400}
+.d-pr{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.d-pr .v{font-family:var(--f-serif);font-size:32px;font-weight:800;letter-spacing:-.03em}
+.d-pr .mut{font-size:12.5px}
+.porque{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.porque b,.quem b,.parec b{display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);font-weight:600;margin-bottom:6px}
+.porque p{font-size:15px;line-height:1.45}
+.quem div{display:flex;flex-wrap:wrap;gap:6px}
+.quem span{font-size:13px;padding:6px 10px;border-radius:999px;background:var(--sunk)}
+.d-go{display:flex;align-items:center;justify-content:center;gap:10px;min-height:56px;border-radius:16px;background:var(--accent);color:#fff;text-decoration:none;font-weight:600;font-size:16px}
+.d-go:hover{filter:brightness(1.06)}
+.d-sec{display:flex;justify-content:center}
+.d-share{font-size:14px;font-weight:500;color:var(--ink);text-decoration:underline;text-underline-offset:3px;padding:6px}
+.d-aviso{font-size:12px;color:var(--ink-3);text-align:center}
+.parec{border-top:1px solid var(--line);padding-top:16px}
+.parec-l{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.pc{display:grid;grid-template-columns:52px 1fr;grid-template-rows:auto auto;column-gap:10px;text-align:left;align-items:center;padding:6px;border-radius:12px;background:var(--surface);border:1px solid var(--line)}
+.pc-ft{grid-row:1/3;width:52px;height:52px;border-radius:10px;aspect-ratio:1}
+.pc-n{font-size:12.5px;font-weight:500;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pc-v{font-size:12.5px;font-weight:600}
+@media (prefers-reduced-motion: reduce){.det-box{animation:none}}
 </style>
 </head>
 <body>
@@ -384,6 +426,13 @@ h1 i,h2 i,h3 i,.ph .pn{font-style:normal}
   </footer>
 </main>
 
+<dialog class="det" id="det" aria-labelledby="detT">
+  <div class="det-box">
+    <button type="button" class="det-x" id="detX" aria-label="Fechar"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+    <div class="det-c" id="detC" tabindex="-1" autofocus></div>
+  </div>
+</dialog>
+
 <a class="flt off zapLink" id="flt" data-local="botao_flutuante" href="#" target="_blank" rel="noopener"><span class="dot" aria-hidden="true"></span>Receber ofertas no WhatsApp</a>
 
 <script>
@@ -394,7 +443,7 @@ h1 i,h2 i,h3 i,.ph .pn{font-style:normal}
    ========================================================= */
 window.SP_PRODUTOS = [
   {id:"p001", nome:"Kit de skincare com 4 itens", preco:79, plataforma:"Shopee", pessoa:["mae","sogra"], pq:"Agrada quem gosta de se cuidar e já vem pronto pra dar.", foto:"", link:"#", sub_id:"bio-0611-p001", rank:1, datas:["blackfriday","natal"]},
-  {id:"p002", nome:"Kit tábua de churrasco com faca e garfo", preco:105, plataforma:"Mercado Livre", pessoa:["pai","sogra"], pq:"Tábua com gaveta pro caldo, faca e garfo: churrasqueiro de verdade usa.", foto:"https://http2.mlstatic.com/D_NQ_NP_789348-MLA113246116612_072026-O.webp", link:"https://meli.la/2c4Y4xz", sub_id:"ga20261105222759069", rank:2, datas:["natal","blackfriday"]},
+  {id:"p002", nome:"Kit tábua de churrasco com faca e garfo", preco:105, plataforma:"Mercado Livre", pessoa:["pai","sogra"], pq:"Tábua com gaveta pro caldo, faca e garfo: churrasqueiro de verdade usa.", foto:"https://http2.mlstatic.com/D_NQ_NP_789348-MLA113246116612_072026-O.webp", link:"https://meli.la/2c4Y4xz", sub_id:"ga20261105222759069", rank:2, datas:["natal","blackfriday"], nota:"4.8", avaliacoes:"801", vendidos:"+1000", entrega:"Full", check:"06/11/2026"},
   {id:"p003", nome:"Caneca térmica personalizada", preco:45, plataforma:"Shopee", pessoa:["amigo-secreto","namorado","pai"], pq:"Coringa de amigo secreto: útil e não parece barato.", foto:"", link:"#", sub_id:"bio-0611-p003", rank:3, datas:["natal"]},
   {id:"p004", nome:"Fone Bluetooth com estojo", preco:189, plataforma:"Amazon", pessoa:["namorado","pai"], pq:"Presente que a pessoa usa todo dia.", foto:"", link:"#", sub_id:"bio-0611-p004", rank:4, datas:["blackfriday"]},
   {id:"p005", nome:"Manta de sofá macia", preco:69, plataforma:"Shopee", pessoa:["avos","mae","sogra"], pq:"Avó ama, e combina com qualquer sala.", foto:"", link:"#", sub_id:"bio-0611-p005", rank:5, datas:["natal"]},
@@ -402,7 +451,7 @@ window.SP_PRODUTOS = [
   {id:"p007", nome:"Luminária de mesa com carregador", preco:99, plataforma:"Mercado Livre", pessoa:["namorado","amigo-secreto"], pq:"Parece caro, custa menos de R$100.", foto:"", link:"#", sub_id:"bio-0611-p007", rank:7, datas:["blackfriday"]},
   {id:"p008", nome:"Porta-retrato digital", preco:249, plataforma:"Amazon", pessoa:["avos","mae"], pq:"Os netos mandam foto e aparece sozinho.", foto:"", link:"#", sub_id:"bio-0611-p008", rank:8, datas:["natal","blackfriday"]},
   {id:"p009", nome:"Jogo de copos de vidro", preco:28, plataforma:"Shopee", pessoa:["amigo-secreto","sogra"], pq:"Amigo secreto até R$30 sem cara de sabonete.", foto:"", link:"#", sub_id:"bio-0611-p009", rank:9, datas:["reveillon","natal"]},
-  {id:"p010", nome:"Carteira slim de couro legítimo", preco:64, plataforma:"Mercado Livre", pessoa:["pai","namorado"], pq:"Couro legítimo, mais de 5 mil vendidas e nota 4,9.", foto:"https://http2.mlstatic.com/D_NQ_NP_832013-MLA114607396375_072026-O.webp", link:"https://meli.la/1ZWVeyu", sub_id:"ga20261105222759069", rank:10, datas:["natal"]},
+  {id:"p010", nome:"Carteira slim de couro legítimo", preco:64, plataforma:"Mercado Livre", pessoa:["pai","namorado"], pq:"Couro legítimo, mais de 5 mil vendidas e nota 4,9.", foto:"https://http2.mlstatic.com/D_NQ_NP_832013-MLA114607396375_072026-O.webp", link:"https://meli.la/1ZWVeyu", sub_id:"ga20261105222759069", rank:10, datas:["natal"], nota:"4.9", avaliacoes:"10.350", vendidos:"+5 mil", entrega:"Full", check:"06/11/2026"},
   {id:"p011", nome:"Garrafa térmica 1 litro", preco:49, plataforma:"Shopee", pessoa:["pai","avos","amigo-secreto"], pq:"Chimarrão, café ou água: todo mundo usa.", foto:"", link:"#", sub_id:"bio-0611-p011", datas:["natal"]},
   {id:"p012", nome:"Brinquedo interativo para gato", preco:35, plataforma:"Shopee", pessoa:["pet"], pq:"Distrai o gato por horas.", foto:"", link:"#", sub_id:"bio-0611-p012", datas:["natal"]},
   {id:"p013", nome:"Necessaire de viagem", preco:39, plataforma:"Shopee", pessoa:["mae","amigo-secreto","namorado"], pq:"Perfeita pra mala de Réveillon.", foto:"", link:"#", sub_id:"bio-0611-p013", datas:["reveillon"]},
@@ -444,11 +493,11 @@ function SP_START(){
   function card(p,c){
     var ft=p.foto?'<img src="'+esc(p.foto)+'" alt="'+esc(p.nome)+'" loading="lazy">'
       :'<div class="ph"><span class="pn">'+esc(p.nome)+'</span><span class="pl">Foto ilustrativa</span></div>';
-    return '<a class="card ver" href="'+esc(p.link)+'" target="_blank" rel="sponsored noopener" data-id="'+esc(p.id)+'" data-cat="'+esc(c)+'">'+
+    return '<a class="card abre" href="?produto='+encodeURIComponent(p.id)+'" data-id="'+esc(p.id)+'" data-cat="'+esc(c)+'">'+
       '<div class="ft t'+(h(p.id)%4+1)+'">'+ft+'<div class="badge"><span>'+esc(p.plataforma)+'</span></div>'+
       (c==="destaque"&&p.rank?'<span class="rk"><small>Nº</small>'+p.rank+'</span>':'')+'</div>'+
       '<div class="inf"><h3>'+esc(p.nome)+'</h3>'+(p.pq?'<p>'+esc(p.pq)+'</p>':'')+
-      '<div class="pr"><span class="v num">'+brl(p.preco)+'<small>aprox.</small></span><span class="go-sm">Ver oferta '+ARROW+'</span></div></div></a>';
+      '<div class="pr"><span class="v num">'+brl(p.preco)+'<small>aprox.</small></span><span class="go-sm">Ver detalhes '+ARROW+'</span></div></div></a>';
   }
 
   var elP=document.getElementById("pessoas"), elS=document.getElementById("seg");
@@ -503,11 +552,58 @@ function SP_START(){
   document.getElementById("guiasL").onclick=function(e){var b=e.target.closest(".guia");if(!b)return;var g=G[+b.getAttribute("data-i")];
     est.pessoa=g.p||"";est.preco=g.preco||"";est.data=g.data||"";track("filtro_vitrine",{filtro_tipo:"guia",filtro_valor:g.k});render(true);};
 
+  /* Detalhe do produto */
+  var det=document.getElementById("det"), detC=document.getElementById("detC"), detCat="";
+  function estrelas(n){return '<span class="stars" aria-hidden="true">★</span> '+String(n).replace(".",",");}
+  function abrir(id,c,push){
+    var p=P.filter(function(x){return x.id===id;})[0]; if(!p) return;
+    detCat=c||"direto";
+    var ft=p.foto?'<img src="'+esc(p.foto)+'" alt="'+esc(p.nome)+'">':'<div class="ph"><span class="pn">'+esc(p.nome)+'</span><span class="pl">Foto ilustrativa</span></div>';
+    var prova=[]; if(p.nota)prova.push(estrelas(p.nota)+(p.avaliacoes?' <span class="mut">('+esc(p.avaliacoes)+' avaliações)</span>':''));
+    if(p.vendidos)prova.push(esc(p.vendidos)+' vendidos');
+    var quem=p.pessoa.map(function(x){return '<span>'+esc(by(PESSOAS,x).l)+'</span>';}).join("");
+    var par=P.filter(function(x){return x.id!==p.id&&x.pessoa.some(function(k){return p.pessoa.indexOf(k)>=0;});})
+      .sort(function(a,b){return Math.abs(a.preco-p.preco)-Math.abs(b.preco-p.preco);}).slice(0,4);
+    var share="https://wa.me/?text="+encodeURIComponent("Olha esse presente: "+p.nome+" "+location.origin+location.pathname+"?produto="+p.id);
+    detC.innerHTML=
+      '<div class="d-ft ft t'+(h(p.id)%4+1)+'">'+ft+'<div class="badge"><span>'+esc(p.plataforma)+'</span>'+(p.entrega?'<span class="full">'+esc(p.entrega)+'</span>':'')+'</div></div>'+
+      '<div class="d-inf">'+
+        '<p class="kicker">'+esc(p.plataforma)+(p.rank?' · Nº '+p.rank+' mais clicado':'')+'</p>'+
+        '<h2 id="detT">'+esc(p.nome)+'</h2>'+
+        (prova.length?'<p class="prova">'+prova.join(' <span class="mut">·</span> ')+'</p>':'')+
+        '<div class="d-pr"><span class="v num">'+brl(p.preco)+'</span><span class="mut">'+(p.check?'preço conferido em '+esc(p.check.slice(0,5))+', pode mudar na loja':'preço aproximado, confira na loja')+'</span></div>'+
+        (p.pq?'<div class="porque"><b>Por que a gente escolheu</b><p>'+esc(p.pq)+'</p></div>':'')+
+        (quem?'<div class="quem"><b>Bom pra</b><div>'+quem+'</div></div>':'')+
+        '<a class="d-go ver" href="'+esc(p.link)+'" target="_blank" rel="sponsored noopener" data-id="'+esc(p.id)+'" data-cat="detalhe">Ver '+({"Mercado Livre":"no Mercado Livre","Shopee":"na Shopee","Amazon":"na Amazon","TikTok Shop":"no TikTok Shop"}[p.plataforma]||"na loja")+' '+ARROW+'</a>'+
+        '<div class="d-sec"><a class="d-share" href="'+esc(share)+'" target="_blank" rel="noopener" data-share="'+esc(p.id)+'">Mandar pra alguém no WhatsApp</a></div>'+
+        '<p class="d-aviso">Link de afiliado: se você comprar por ele, a gente pode ganhar uma comissão, sem custo a mais pra você.</p>'+
+        (par.length?'<div class="parec"><b>Parecidos</b><div class="parec-l">'+par.map(function(x){
+          return '<button type="button" class="pc" data-id="'+esc(x.id)+'"><span class="pc-ft ft t'+(h(x.id)%4+1)+'">'+(x.foto?'<img src="'+esc(x.foto)+'" alt="">':'')+'</span><span class="pc-n">'+esc(x.nome)+'</span><span class="pc-v num">'+brl(x.preco)+'</span></button>';}).join("")+'</div></div>':'')+
+      '</div>';
+    if(!det.open){ if(det.showModal) det.showModal(); else det.setAttribute("open",""); }
+    det.scrollTop=0; detC.scrollTop=0;
+    document.documentElement.classList.add("travado");
+    if(push!==false){ try{ var u=new URLSearchParams(location.search); u.set("produto",p.id); history.replaceState(null,"",location.pathname+"?"+u+location.hash);}catch(e){} }
+    track("abrir_produto",{produto_id:p.id,produto_nome:p.nome,plataforma:p.plataforma,preco_aprox:p.preco,categoria:detCat});
+  }
+  function fechar(){
+    if(det.open){ if(det.close) det.close(); else det.removeAttribute("open"); }
+  }
+  det.addEventListener("close",function(){
+    document.documentElement.classList.remove("travado");
+    try{ var u=new URLSearchParams(location.search); u.delete("produto"); history.replaceState(null,"",location.pathname+(u.toString()?"?"+u:"")+location.hash);}catch(e){}
+  });
+  det.addEventListener("click",function(e){ if(e.target===det) fechar(); var pc=e.target.closest(".pc"); if(pc){ abrir(pc.getAttribute("data-id"),"parecidos"); } });
+  document.getElementById("detX").onclick=fechar;
+
   /* Setas do trilho */
   document.querySelectorAll(".setas button").forEach(function(b){b.onclick=function(){var t=document.getElementById("destaque");t.scrollBy({left:(+b.getAttribute("data-d"))*t.clientWidth*.8,behavior:"smooth"});};});
 
   /* Cliques */
   document.addEventListener("click",function(e){
+    var ab=e.target.closest(".abre[data-id]");
+    if(ab&&!e.metaKey&&!e.ctrlKey){e.preventDefault();abrir(ab.getAttribute("data-id"),ab.getAttribute("data-cat"));return;}
+    var sh=e.target.closest("[data-share]"); if(sh){track("compartilhar_produto",{produto_id:sh.getAttribute("data-share")});return;}
     var a=e.target.closest(".ver[data-id]");
     if(a){var p=P.filter(function(x){return x.id===a.getAttribute("data-id");})[0];if(p)track("clique_oferta",{categoria:a.getAttribute("data-cat"),produto_id:p.id,produto_nome:p.nome,plataforma:p.plataforma,preco_aprox:p.preco,sub_id:p.sub_id||""});return;}
     var z=e.target.closest(".zapLink");if(z)track("clique_whatsapp",{local:z.getAttribute("data-local")||""});
@@ -535,6 +631,7 @@ function SP_START(){
   addEventListener("scroll",onS,{passive:true});
   if("IntersectionObserver" in window)new IntersectionObserver(function(es){es.forEach(function(e){perto=e.isIntersecting;onS();});}).observe(grupo);
   render(false);onS();
+  if(q.get("produto")) abrir(q.get("produto"),"link_direto",false);
   track("vitrine_carregada",{filtro_inicial:cat()});
 }
 /* Carrega os produtos da planilha do Google (se configurada); se falhar, usa a lista acima */
@@ -552,7 +649,7 @@ function SP_START(){
     var out=rows.map(function(c){var o={};h.forEach(function(k,i){o[k]=(c[i]||"").trim();});return o;})
       .filter(function(o){var st=(o.status||"").toLowerCase();return o.id&&o.nome&&o.preco&&(st==="ativo"||st==="exemplo");})
       .map(function(o){return {id:o.id,nome:o.nome,plataforma:o.plataforma,preco:parseFloat(String(o.preco).replace(/[^0-9,\.]/g,"").replace(",","."))||0,
-        pessoa:lista(o.pessoa),datas:lista(o.datas),rank:parseInt(o.rank,10)||undefined,pq:o.por_que_vale,foto:o.foto,link:o.link_afiliado||"#",sub_id:o.sub_id};});
+        pessoa:lista(o.pessoa),datas:lista(o.datas),rank:parseInt(o.rank,10)||undefined,pq:o.por_que_vale,foto:o.foto,link:o.link_afiliado||"#",sub_id:o.sub_id,nota:o.nota,avaliacoes:o.avaliacoes,vendidos:o.vendidos,entrega:o.entrega,check:o.ultimo_check};});
     if(out.length) window.SP_PRODUTOS=out;
     ok=true; clearTimeout(t); SP_START();
   }).catch(function(){ if(!ok){ ok=true; clearTimeout(t); SP_START(); } });
