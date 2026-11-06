@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Socorro, Presente! | Vitrine de presentes</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Diz pra quem é e quanto quer gastar, a gente acha o presente. Curadoria diária de presentes do @socorropresente_.">
+<meta name="theme-color" content="#F6F2EC">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:title" content="Socorro, Presente!">
+<meta property="og:description" content="Diz pra quem é e quanto quer gastar, a gente acha o presente.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="logo-og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=Baloo+2:wght@800&display=swap" rel="stylesheet">
+
+<script>
+/* =========================================================
+   CONFIGURAÇÃO — troque só o que está aqui em cima
+   ========================================================= */
+window.SP_CONFIG = {
+  GTM_ID: "",                       // ex.: "GTM-ABC1234" (vazio = GTM desligado)
+  WHATSAPP_URL: "https://chat.whatsapp.com/EndlOMvXSzQENBRWj8NNNy",
+  TIKTOK_URL: "https://www.tiktok.com/@socorropresente_",
+  INSTAGRAM_URL: "https://www.instagram.com/socorropresente_/",
+  DATA_ATIVA: "blackfriday",        // "blackfriday", "natal", "reveillon" ou ""
+  // Planilha do Google com os produtos (precisa estar compartilhada como "Qualquer pessoa com o link: leitor").
+  // Vazio = usa a lista de produtos escrita neste arquivo.
+  PLANILHA_CSV: "https://docs.google.com/spreadsheets/d/11rpuoVUHuww_N1V-lMGK54xmziVFB34mPUflzJARCC0/gviz/tq?tqx=out:csv"
+};
+window.dataLayer = window.dataLayer || [];
+(function(id){ if(!id) return;
+  dataLayer.push({'gtm.start': new Date().getTime(), event:'gtm.js'});
+  var s=document.createElement('script'); s.async=true;
+  s.src='https://www.googletagmanager.com/gtm.js?id='+id;
+  document.head.appendChild(s);
+})(window.SP_CONFIG.GTM_ID);
+</script>
+
+<style>
+/* Layout: faixa de aviso → cabeçalho → hero editorial com o "concierge" (pessoa em cards + orçamento segmentado)
+   → top 10 → guias da temporada → grade → prévia do grupo → rodapé. Serifa só em títulos; Geist em toda a interface. */
+:root{
+  --bg:#F6F2EC; --surface:#FFFFFF; --sunk:#EFE8DF;
+  --ink:#181213; --ink-2:#6E6365; --ink-3:#9A8F90; --line:#E4DBD0; --line-2:#D6CBBE;
+  --accent:#A3122B; --accent-soft:#F4E7E4;
+  --season:#173D2F; --season-2:#24563F;
+  --on-dark:#F6F2EC;
+  --tone-1:#EFE3DB; --tone-2:#E7E3D6; --tone-3:#DFE5DD; --tone-4:#ECE0E3;
+  --zap:#1FA855;
+  --shadow:0 1px 1px rgba(24,18,19,.04),0 18px 40px -20px rgba(24,18,19,.22);
+  --f-serif:"Bricolage Grotesque","Figtree",system-ui,sans-serif;
+  --f-ui:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-brand:"Baloo 2",system-ui,sans-serif;
+  --gl:max(16px, env(safe-area-inset-left, 0px)); --gr:max(16px, env(safe-area-inset-right, 0px));
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#120D0E; --surface:#1B1517; --sunk:#221B1D; --ink:#F3ECE6; --ink-2:#B3A7A5; --ink-3:#85797A; --line:#2E2528; --line-2:#3C3134;
+  --accent:#E2506A; --accent-soft:#2F1A1F; --season:#163A2D; --season-2:#1F4D39; --on-dark:#F3ECE6;
+  --tone-1:#261D1E; --tone-2:#242019; --tone-3:#1C231F; --tone-4:#271C21;
+  --shadow:0 1px 1px rgba(0,0,0,.3),0 18px 40px -20px rgba(0,0,0,.7); color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#120D0E; --surface:#1B1517; --sunk:#221B1D; --ink:#F3ECE6; --ink-2:#B3A7A5; --ink-3:#85797A; --line:#2E2528; --line-2:#3C3134;
+  --accent:#E2506A; --accent-soft:#2F1A1F; --season:#163A2D; --season-2:#1F4D39; --on-dark:#F3ECE6;
+  --tone-1:#261D1E; --tone-2:#242019; --tone-3:#1C231F; --tone-4:#271C21;
+  --shadow:0 1px 1px rgba(0,0,0,.3),0 18px 40px -20px rgba(0,0,0,.7); color-scheme:dark }
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:72px}
+body{font-family:var(--f-ui);font-size:15px;line-height:1.5;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;}
+img{max-width:100%;display:block}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:8px}
+.wrap{max-width:1200px;margin:0 auto;padding-left:var(--gl);padding-right:var(--gr)}
+.kicker{font-size:11.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.serif{font-family:var(--f-serif);font-weight:400;letter-spacing:-.01em}
+h1,h2,h3{font-weight:400;text-wrap:balance}
+.num{font-variant-numeric:tabular-nums}
+
+/* Faixa de aviso */
+.aviso{background:var(--ink);color:var(--bg);font-size:13px}
+.aviso a{display:flex;align-items:center;justify-content:center;gap:10px;min-height:38px;text-decoration:none;padding-block:8px;padding-left:var(--gl);padding-right:var(--gr);text-align:center;font-size:12.5px}
+.aviso b{font-weight:600}
+.aviso .seta{opacity:.7}
+.aviso .av-l{display:none}
+@media(min-width:600px){.aviso .av-l{display:inline}.aviso .av-s{display:none}}
+
+/* Cabeçalho */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--bg)}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border-bottom:1px solid transparent;transition:border-color .2s}
+.top.linha{border-bottom-color:var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:60px}
+.marca{display:flex;align-items:center;gap:10px;text-decoration:none}
+.marca img{width:32px;height:32px;border-radius:50%}
+.marca b{font-family:var(--f-brand);font-weight:800;font-size:17px;letter-spacing:-.01em;white-space:nowrap}
+.nav{display:flex;align-items:center;gap:6px}
+.nav .lnk{display:none;font-size:14px;color:var(--ink-2);text-decoration:none;padding:8px 10px;border-radius:8px}
+.nav .lnk:hover{color:var(--ink)}
+@media(min-width:860px){.nav .lnk{display:inline-flex}}
+.btn-sm{display:inline-flex;align-items:center;gap:8px;min-height:38px;padding:0 14px;border-radius:999px;background:var(--ink);color:var(--bg);font-size:13.5px;font-weight:500;text-decoration:none;white-space:nowrap}
+.btn-sm .dot{width:7px;height:7px;border-radius:50%;background:var(--zap)}
+
+/* Hero */
+.hero{padding-block:36px 12px}
+.hero .wrap{display:grid;gap:32px}
+@media(min-width:980px){.hero{padding-block:64px 24px}.hero .wrap{grid-template-columns:.9fr 1.1fr;gap:64px;align-items:start}}
+.hero h1{font-family:var(--f-serif);font-size:clamp(52px,14vw,104px);line-height:.92;letter-spacing:-.025em;margin-top:14px}
+.hero h1 i{color:var(--accent)}
+.hero .sub{font-size:17px;color:var(--ink-2);max-width:38ch;margin-top:18px;line-height:1.5}
+.lojas{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;margin-top:28px;padding-top:20px;border-top:1px solid var(--line);color:var(--ink-2);font-size:13px}
+.lojas span{font-weight:600;color:var(--ink);letter-spacing:-.01em;font-size:14px}
+.lojas em{font-style:normal;color:var(--ink-3)}
+@media(min-width:980px){.lojas{margin-top:44px}}
+
+/* Concierge */
+.conc{background:var(--surface);border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow);padding:22px 18px 18px}
+@media(min-width:600px){.conc{padding:28px}}
+.passo{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:12px}
+.passo h2{font-family:var(--f-ui);font-size:15px;font-weight:600;letter-spacing:-.01em}
+.passo h2 .n{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--sunk);font-size:12px;font-weight:600;margin-right:8px;vertical-align:1px}
+.passo small{font-size:12.5px;color:var(--ink-3)}
+.pessoas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media(min-width:600px){.pessoas{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.pessoa{position:relative;text-align:left;border-radius:16px;padding:12px 14px 12px;min-height:84px;display:flex;flex-direction:column;justify-content:space-between;background:var(--sunk);border:1px solid transparent;transition:background .15s,border-color .15s,transform .15s}
+.pessoa:hover{border-color:var(--line-2)}
+.pessoa:active{transform:scale(.985)}
+.pessoa .nm{font-family:var(--f-serif);font-size:25px;line-height:1;letter-spacing:-.01em;padding-right:22px}
+@media(min-width:600px){.pessoa .nm{font-size:22px}}
+.pessoa .mt{font-size:12px;color:var(--ink-2);margin-top:10px}
+.pessoa .ck{position:absolute;top:10px;right:10px;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--line-2);display:flex;align-items:center;justify-content:center}
+.pessoa[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.pessoa[aria-pressed="true"] .mt{color:color-mix(in srgb,var(--bg) 70%,transparent)}
+.pessoa[aria-pressed="true"] .ck{background:var(--bg);border-color:var(--bg)}
+.pessoa[aria-pressed="true"] .ck::after{content:"";width:8px;height:5px;border-left:2px solid var(--ink);border-bottom:2px solid var(--ink);transform:rotate(-45deg) translate(1px,-1px)}
+.sep{height:1px;background:var(--line);margin:20px 0 18px}
+.seg{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));background:var(--sunk);border-radius:14px;padding:4px;gap:2px}
+.seg button{border-radius:10px;padding:9px 2px 8px;display:flex;flex-direction:column;align-items:center;gap:1px;transition:background .15s}
+.seg .v{font-size:14px;font-weight:600;letter-spacing:-.01em;white-space:nowrap}
+.seg .c{font-size:11px;color:var(--ink-3)}
+.seg button[aria-pressed="true"]{background:var(--surface);box-shadow:0 1px 2px rgba(0,0,0,.08),0 0 0 1px var(--line)}
+.seg button:disabled{opacity:.4;cursor:default}
+.go{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;margin-top:18px;min-height:56px;padding:0 20px;border-radius:16px;background:var(--accent);color:#fff;font-weight:500;font-size:16px;transition:filter .15s}
+.go:hover{filter:brightness(1.06)}
+.go .ar{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center}
+.limpa{display:block;margin:12px auto 0;font-size:13px;color:var(--ink-2);text-decoration:underline;text-underline-offset:3px}
+
+/* Seções */
+.sec{margin-top:72px}
+.sec-h{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:20px}
+.sec-h h2{font-family:var(--f-serif);font-size:clamp(34px,8vw,52px);line-height:1;letter-spacing:-.02em;margin-top:8px}
+.sec-h h2 i{color:var(--accent)}
+.sec-h>p{font-size:14px;color:var(--ink-2);max-width:36ch;display:none}
+@media(min-width:700px){.sec-h>p{display:block}}
+
+/* Contagem */
+.conta{margin-top:40px}
+.conta .box{display:grid;grid-template-columns:auto 1fr;gap:4px 18px;align-items:center;background:var(--season);color:var(--on-dark);border-radius:24px;padding:20px 22px;position:relative;overflow:hidden}
+@media(min-width:760px){.conta .box{grid-template-columns:auto 1fr auto;padding:24px 32px}}
+.conta .d{font-family:var(--f-serif);font-size:68px;line-height:.85;letter-spacing:-.03em}
+.conta .t{font-size:13px;opacity:.75}
+.conta .tt{font-family:var(--f-serif);font-size:28px;line-height:1.05}
+.conta button{grid-column:1/-1;justify-self:stretch;margin-top:14px;min-height:46px;border-radius:999px;background:var(--on-dark);color:var(--season);font-weight:600;font-size:14px;padding:0 18px}
+@media(min-width:760px){.conta button{grid-column:auto;margin-top:0;justify-self:end}}
+.conta .box::after{content:"";position:absolute;right:-60px;top:-60px;width:200px;height:200px;border-radius:50%;border:1px solid rgba(255,255,255,.12);box-shadow:0 0 0 30px rgba(255,255,255,.03),0 0 0 60px rgba(255,255,255,.025)}
+
+/* Trilho */
+.trilho{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(220px,68%);gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:var(--gl) var(--gr);margin-left:calc(-1*var(--gl));margin-right:calc(-1*var(--gr));padding-left:var(--gl);padding-right:var(--gr);padding-bottom:4px;scrollbar-width:none}
+.trilho::-webkit-scrollbar{display:none}
+.trilho>*{scroll-snap-align:start}
+@media(min-width:640px){.trilho{grid-auto-columns:minmax(240px,38%)}}
+@media(min-width:1000px){.trilho{grid-auto-columns:calc((100% - 3*14px)/4.3)}}
+.setas{display:none;gap:8px}
+@media(min-width:1000px){.setas{display:flex}}
+.setas button{width:40px;height:40px;border-radius:50%;border:1px solid var(--line-2);display:flex;align-items:center;justify-content:center}
+.setas button:hover{background:var(--surface)}
+
+/* Produto */
+.grade{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 12px}
+@media(min-width:700px){.grade{grid-template-columns:repeat(3,minmax(0,1fr));gap:36px 18px}}
+@media(min-width:1060px){.grade{grid-template-columns:repeat(4,minmax(0,1fr));gap:40px 20px}}
+.card{display:flex;flex-direction:column;min-width:0;text-decoration:none}
+.ft{position:relative;aspect-ratio:4/5;max-width:100%;border-radius:18px;overflow:hidden;background:var(--tone-1)}
+.ft img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.card:hover .ft img{transform:scale(1.04)}
+.ft.t2{background:var(--tone-2)}.ft.t3{background:var(--tone-3)}.ft.t4{background:var(--tone-4)}
+.ph{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:16px}
+.ph .pn{font-family:var(--f-serif);font-style:italic;font-size:clamp(22px,5.6vw,30px);line-height:1.02;letter-spacing:-.01em;color:color-mix(in srgb,var(--ink) 78%,transparent);text-wrap:balance}
+.ph .pl{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-top:10px}
+
+.badge{position:absolute;top:10px;left:10px;display:flex;gap:6px}
+.badge span{background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(6px);font-size:11px;font-weight:500;padding:5px 9px;border-radius:999px;color:var(--ink)}
+.rk{position:absolute;top:8px;right:12px;font-family:var(--f-serif);font-size:44px;line-height:1;color:var(--accent);letter-spacing:-.02em}
+.rk small{font-family:var(--f-ui);font-size:11px;letter-spacing:.08em;vertical-align:top;margin-right:2px;color:var(--ink-2)}
+.inf{padding-top:12px;display:flex;flex-direction:column;gap:3px;flex:1}
+.inf h3{font-size:15px;font-weight:500;line-height:1.3;letter-spacing:-.01em}
+.inf p{font-size:13.5px;color:var(--ink-2);line-height:1.4}
+.pr{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 8px;margin-top:auto;padding-top:10px;border-top:1px solid var(--line)}
+.inf p{margin-bottom:10px}
+.pr .v{font-size:16px;font-weight:600;letter-spacing:-.02em;white-space:nowrap}
+.pr .v small{font-size:11.5px;font-weight:400;color:var(--ink-3);margin-left:4px;letter-spacing:0}
+.pr .go-sm{display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:500;color:var(--accent);white-space:nowrap}
+.card:hover .go-sm{text-decoration:underline;text-underline-offset:3px}
+.vazio{grid-column:1/-1;border:1px dashed var(--line-2);border-radius:24px;padding:40px 20px;text-align:center}
+.vazio h3{font-family:var(--f-serif);font-size:30px}
+.vazio p{color:var(--ink-2);margin-top:6px}
+.vazio a{margin-top:18px}
+.ordem{display:flex;background:var(--sunk);border-radius:999px;padding:3px;flex:none}
+.ordem button{font-size:12.5px;font-weight:500;padding:7px 12px;border-radius:999px;color:var(--ink-2);white-space:nowrap}
+.ordem button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+
+/* Guias */
+.guia{position:relative;display:flex;flex-direction:column;justify-content:space-between;min-height:260px;border-radius:24px;padding:22px;text-align:left;overflow:hidden;color:var(--on-dark)}
+.guia.g1{background:#9C1129}.guia.g2{background:var(--season)}.guia.g3{background:#2A1F21}.guia.g4{background:#6E4B2E}
+.guia .k{font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.75}
+.guia h3{font-family:var(--f-serif);font-size:34px;line-height:1;letter-spacing:-.01em;margin-top:12px}
+.guia .ft2{display:flex;align-items:center;justify-content:space-between;font-size:13.5px;margin-top:28px}
+.guia .ft2 span:last-child{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;transition:transform .2s}
+.guia:hover .ft2 span:last-child{transform:translateX(3px)}
+.guia::after{content:"";position:absolute;right:-40px;bottom:-40px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.06)}
+
+/* Grupo */
+.grupo{display:grid;gap:28px;background:var(--surface);border:1px solid var(--line);border-radius:32px;padding:28px 20px;overflow:hidden}
+@media(min-width:900px){.grupo{grid-template-columns:1fr 1fr;padding:48px;align-items:center}}
+.grupo h2{font-family:var(--f-serif);font-size:clamp(36px,8vw,56px);line-height:.98;letter-spacing:-.02em;margin-top:10px}
+.grupo h2 i{color:var(--accent)}
+.grupo ul{list-style:none;display:grid;gap:10px;margin-top:20px;font-size:14.5px;color:var(--ink-2)}
+.grupo li{display:flex;gap:10px;align-items:flex-start}
+.grupo li::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--accent);margin-top:8px}
+.grupo .cta{display:inline-flex;align-items:center;gap:10px;margin-top:24px;min-height:52px;padding:0 22px;border-radius:999px;background:var(--zap);color:#fff;font-weight:600;text-decoration:none}
+.chat{background:#E9DFD3;border-radius:24px;padding:18px 14px;display:flex;flex-direction:column;gap:8px;max-width:420px;width:100%;justify-self:center}
+.chat .hd{display:flex;align-items:center;gap:10px;padding:0 4px 10px;border-bottom:1px solid rgba(0,0,0,.08);margin-bottom:4px;color:#1d1a17}
+.chat .hd img{width:34px;height:34px;border-radius:50%}
+.chat .hd b{font-size:14px;font-weight:600;display:block}
+.chat .hd small{font-size:12px;color:#6b625a}
+.msg{background:#fff;color:#1d1a17;border-radius:4px 14px 14px 14px;padding:10px 12px 6px;font-size:13.5px;line-height:1.45;box-shadow:0 1px 1px rgba(0,0,0,.06);max-width:92%}
+.msg b{font-weight:600}
+.msg .lk{color:#1a73a8;word-break:break-all}
+.msg .hr{display:block;text-align:right;font-size:10.5px;color:#8d857d;margin-top:2px}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .chat{background:#1A1F1D}:root:not([data-theme="light"]) .chat .hd{color:#E9EDEF;border-color:rgba(255,255,255,.08)}:root:not([data-theme="light"]) .chat .hd small{color:#8696A0}:root:not([data-theme="light"]) .msg{background:#202C33;color:#E9EDEF}:root:not([data-theme="light"]) .msg .lk{color:#53BDEB}}
+:root[data-theme="dark"] .chat{background:#1A1F1D}:root[data-theme="dark"] .chat .hd{color:#E9EDEF;border-color:rgba(255,255,255,.08)}:root[data-theme="dark"] .chat .hd small{color:#8696A0}:root[data-theme="dark"] .msg{background:#202C33;color:#E9EDEF}:root[data-theme="dark"] .msg .lk{color:#53BDEB}
+
+/* Rodapé */
+.rodape{margin-top:72px;border-top:1px solid var(--line);padding-block:32px calc(100px + env(safe-area-inset-bottom,0px));display:grid;gap:20px;font-size:13px;color:var(--ink-2)}
+@media(min-width:800px){.rodape{grid-template-columns:1fr 1.4fr;gap:40px}}
+.rodape .m{display:flex;align-items:center;gap:10px;color:var(--ink)}
+.rodape .m img{width:28px;height:28px;border-radius:50%}
+.rodape .m b{font-family:var(--f-brand);font-size:16px}
+.rodape nav{display:flex;gap:16px;margin-top:12px}
+.rodape nav a{color:var(--ink);text-decoration:none;font-weight:500}
+.rodape p+p{margin-top:8px}
+
+/* Flutuante */
+.flt{position:fixed;z-index:25;left:50%;bottom:calc(14px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);display:flex;align-items:center;gap:10px;min-height:48px;padding:0 18px 0 14px;border-radius:999px;background:var(--ink);color:var(--bg);text-decoration:none;font-size:14px;font-weight:500;box-shadow:0 14px 34px -10px rgba(0,0,0,.45);transition:transform .3s,opacity .3s;white-space:nowrap}
+.flt .dot{width:8px;height:8px;border-radius:50%;background:var(--zap);box-shadow:0 0 0 4px color-mix(in srgb,var(--zap) 25%,transparent)}
+.flt.off{transform:translate(-50%,140%);opacity:0;pointer-events:none}
+
+@media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+/* Ajustes para a Bricolage (sem itálico verdadeiro: destaque só pela cor) */
+h1 i,h2 i,h3 i,.ph .pn{font-style:normal}
+.hero h1{font-size:clamp(46px,12.5vw,88px);font-weight:800;letter-spacing:-.045em;line-height:.94}
+.sec-h h2,.grupo h2{font-weight:800;letter-spacing:-.035em;font-size:clamp(30px,7.4vw,46px);line-height:1.02}
+.pessoa .nm{font-weight:700;font-size:18px;letter-spacing:-.02em;padding-right:26px}
+@media(min-width:600px){.pessoa .nm{font-size:18px}}
+.ph .pn{font-weight:700;letter-spacing:-.025em;font-size:clamp(19px,4.8vw,26px)}
+.conta .d{font-weight:800;letter-spacing:-.05em;font-size:60px}
+.conta .tt{font-weight:700;font-size:24px;letter-spacing:-.02em}
+.guia h3{font-weight:700;font-size:28px;letter-spacing:-.025em;line-height:1.05}
+.vazio h3{font-weight:700;font-size:24px;letter-spacing:-.02em}
+.rk{font-weight:800;font-size:40px;letter-spacing:-.05em}
+.passo h2,.inf h3{letter-spacing:-.005em}
+.sec.primeiro{margin-top:28px}
+@media(min-width:980px){.sec.primeiro{margin-top:48px}}
+.hero{border-top:1px solid var(--line);margin-top:56px}
+</style>
+</head>
+<body>
+
+<div class="aviso" id="aviso" hidden><a class="zapLink" data-local="faixa_aviso" href="#" target="_blank" rel="noopener"><span id="avisoTxt"></span><span class="seta" aria-hidden="true">→</span></a></div>
+
+<header class="top" id="topo">
+  <div class="wrap">
+    <a class="marca" href="./" aria-label="Socorro, Presente! início"><img src="logo.png" width="32" height="32" alt=""><b>Socorro, Presente!</b></a>
+    <nav class="nav" aria-label="Principal">
+      <a class="lnk" href="#mais">Mais clicados</a>
+      <a class="lnk" href="#guias">Guias</a>
+      <a class="lnk" href="#lista-sec">Todos os presentes</a>
+      <a class="btn-sm zapLink" data-local="cabecalho" href="#" target="_blank" rel="noopener"><span class="dot" aria-hidden="true"></span>Grupo de ofertas</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="sec primeiro" id="mais" aria-labelledby="t-mais">
+    <div class="sec-h">
+      <div><p class="kicker">Esta semana</p><h2 id="t-mais">Os 10 <i>mais clicados</i></h2></div>
+      <div class="setas"><button type="button" data-d="-1" aria-label="Anterior"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button type="button" data-d="1" aria-label="Próximo"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+    </div>
+    <div class="trilho" id="destaque"></div>
+  </section>
+</div>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <p class="kicker">Curadoria de presentes · Natal 2026</p>
+      <h1>Pra quem é<br>o <i>presente?</i></h1>
+      <p class="sub">Diz pra quem é e quanto quer gastar. A gente garimpa as lojas todo dia e separa só o que vale o seu dinheiro.</p>
+      <div class="lojas"><em>Achados em</em><span>Shopee</span><span>Amazon</span><span>Mercado Livre</span><span>TikTok Shop</span></div>
+    </div>
+
+    <div class="conc" role="search" aria-label="Encontrar presente">
+      <div class="passo"><h2><span class="n">1</span>Pra quem é?</h2><small id="pSel">Escolha uma pessoa</small></div>
+      <div class="pessoas" id="pessoas"></div>
+      <div class="sep"></div>
+      <div class="passo"><h2><span class="n">2</span>Quanto quer gastar?</h2><small>Preço aproximado</small></div>
+      <div class="seg" id="seg" role="group" aria-label="Orçamento"></div>
+      <button type="button" class="go" id="go"><span id="goTxt">Ver ideias</span><span class="ar" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+      <button type="button" class="limpa" id="limpa" hidden>Limpar escolhas</button>
+    </div>
+  </div>
+</section>
+
+<main class="wrap">
+  <div class="conta" id="conta" hidden>
+    <div class="box">
+      <span class="d num" id="cD"></span>
+      <div><div class="t" id="cT"></div><div class="tt" id="cTT"></div></div>
+      <button type="button" id="cBtn">Ver a seleção</button>
+    </div>
+  </div>
+
+
+  <section class="sec" id="guias" aria-labelledby="t-guias">
+    <div class="sec-h"><div><p class="kicker">Atalhos da temporada</p><h2 id="t-guias">Guias <i>prontos</i></h2></div><p>Listas montadas pra quem não quer pensar muito.</p></div>
+    <div class="trilho" id="guiasL"></div>
+  </section>
+
+  <section class="sec" id="lista-sec" aria-labelledby="t-lista">
+    <div class="sec-h">
+      <div><p class="kicker" id="lK">Catálogo</p><h2 id="t-lista">Todos os <i>presentes</i></h2></div>
+      <div class="ordem" role="group" aria-label="Ordenar">
+        <button type="button" data-o="preco" aria-pressed="true">Menor preço</button>
+        <button type="button" data-o="rank" aria-pressed="false">Populares</button>
+      </div>
+    </div>
+    <div class="grade" id="lista" aria-live="polite"></div>
+  </section>
+
+  <section class="sec grupo" aria-labelledby="t-grupo">
+    <div>
+      <p class="kicker">Grupo do WhatsApp</p>
+      <h2 id="t-grupo">A oferta chega <i>antes</i> no grupo.</h2>
+      <ul>
+        <li>De 3 a 5 achados por dia, um por mensagem.</li>
+        <li>Só a gente posta: sem conversa paralela, sem spam.</li>
+        <li>Na Black Friday e no Natal, aviso na hora em que o preço cai.</li>
+      </ul>
+      <a class="cta zapLink" data-local="bloco_grupo" href="#" target="_blank" rel="noopener">Entrar no grupo <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+    <div class="chat" aria-label="Exemplo de mensagem do grupo">
+      <div class="hd"><img src="logo.png" alt=""><span><b>Socorro, Presente! | Ofertas</b><small>Só admins enviam mensagens</small></span></div>
+      <div class="msg"><b>🎁 Pra sogra que "não precisa de nada"</b><br>Kit de chás importados<br>💰 ~R$ 55 (preço pode mudar)<br>✨ Por que vale: vem em caixa bonita, já pronto pra dar.<br><span class="lk">socorropresente.com.br/p015</span><span class="hr">09:12</span></div>
+      <div class="msg"><b>⏰ Amigo secreto até R$30</b><br>Jogo de copos de vidro, ~R$ 28<br><span class="lk">socorropresente.com.br/p009</span><span class="hr">12:40</span></div>
+    </div>
+  </section>
+
+  <footer class="rodape">
+    <div>
+      <div class="m"><img src="logo.png" alt=""><b>Socorro, Presente!</b></div>
+      <nav><a id="lnkTiktok" href="#" target="_blank" rel="noopener">TikTok</a><a id="lnkInsta" href="#" target="_blank" rel="noopener">Instagram</a><a class="zapLink" data-local="rodape" href="#" target="_blank" rel="noopener">WhatsApp</a></nav>
+    </div>
+    <div>
+      <p><b>Links de afiliado.</b> Quando você compra por eles, a gente pode receber uma comissão da loja, sem custo a mais pra você. É assim que a curadoria se paga.</p>
+      <p>Preços aproximados, conferidos na data da publicação. Eles mudam: confira o valor final na loja antes de comprar.</p>
+      <p>© 2026 Socorro, Presente!</p>
+    </div>
+  </footer>
+</main>
+
+<a class="flt off zapLink" id="flt" data-local="botao_flutuante" href="#" target="_blank" rel="noopener"><span class="dot" aria-hidden="true"></span>Receber ofertas no WhatsApp</a>
+
+<script>
+/* =========================================================
+   PRODUTOS — exemplos. Substituir pelos reais da planilha.
+   pessoa: mae, pai, sogra, avos, namorado, amigo-secreto, pet
+   datas: blackfriday, natal, reveillon · rank: 1 a 10 · foto: URL da foto real
+   ========================================================= */
+window.SP_PRODUTOS = [
+  {id:"p001", nome:"Kit de skincare com 4 itens", preco:79, plataforma:"Shopee", pessoa:["mae","sogra"], pq:"Agrada quem gosta de se cuidar e já vem pronto pra dar.", foto:"", link:"#", sub_id:"bio-0611-p001", rank:1, datas:["blackfriday","natal"]},
+  {id:"p002", nome:"Kit churrasco com tábua e faca", preco:129, plataforma:"Mercado Livre", pessoa:["pai","sogra"], pq:"O tio que \"já tem tudo\" não tem esse.", foto:"", link:"#", sub_id:"bio-0611-p002", rank:2, datas:["natal"]},
+  {id:"p003", nome:"Caneca térmica personalizada", preco:45, plataforma:"Shopee", pessoa:["amigo-secreto","namorado","pai"], pq:"Coringa de amigo secreto: útil e não parece barato.", foto:"", link:"#", sub_id:"bio-0611-p003", rank:3, datas:["natal"]},
+  {id:"p004", nome:"Fone Bluetooth com estojo", preco:189, plataforma:"Amazon", pessoa:["namorado","pai"], pq:"Presente que a pessoa usa todo dia.", foto:"", link:"#", sub_id:"bio-0611-p004", rank:4, datas:["blackfriday"]},
+  {id:"p005", nome:"Manta de sofá macia", preco:69, plataforma:"Shopee", pessoa:["avos","mae","sogra"], pq:"Avó ama, e combina com qualquer sala.", foto:"", link:"#", sub_id:"bio-0611-p005", rank:5, datas:["natal"]},
+  {id:"p006", nome:"Cama pet redonda", preco:59, plataforma:"Shopee", pessoa:["pet"], pq:"O pet também entra na lista.", foto:"", link:"#", sub_id:"bio-0611-p006", rank:6, datas:["natal"]},
+  {id:"p007", nome:"Luminária de mesa com carregador", preco:99, plataforma:"Mercado Livre", pessoa:["namorado","amigo-secreto"], pq:"Parece caro, custa menos de R$100.", foto:"", link:"#", sub_id:"bio-0611-p007", rank:7, datas:["blackfriday"]},
+  {id:"p008", nome:"Porta-retrato digital", preco:249, plataforma:"Amazon", pessoa:["avos","mae"], pq:"Os netos mandam foto e aparece sozinho.", foto:"", link:"#", sub_id:"bio-0611-p008", rank:8, datas:["natal","blackfriday"]},
+  {id:"p009", nome:"Jogo de copos de vidro", preco:28, plataforma:"Shopee", pessoa:["amigo-secreto","sogra"], pq:"Amigo secreto até R$30 sem cara de sabonete.", foto:"", link:"#", sub_id:"bio-0611-p009", rank:9, datas:["reveillon","natal"]},
+  {id:"p010", nome:"Carteira de couro slim", preco:89, plataforma:"Mercado Livre", pessoa:["pai","namorado"], pq:"Clássico que não erra.", foto:"", link:"#", sub_id:"bio-0611-p010", rank:10, datas:["natal"]},
+  {id:"p011", nome:"Garrafa térmica 1 litro", preco:49, plataforma:"Shopee", pessoa:["pai","avos","amigo-secreto"], pq:"Chimarrão, café ou água: todo mundo usa.", foto:"", link:"#", sub_id:"bio-0611-p011", datas:["natal"]},
+  {id:"p012", nome:"Brinquedo interativo para gato", preco:35, plataforma:"Shopee", pessoa:["pet"], pq:"Distrai o gato por horas.", foto:"", link:"#", sub_id:"bio-0611-p012", datas:["natal"]},
+  {id:"p013", nome:"Necessaire de viagem", preco:39, plataforma:"Shopee", pessoa:["mae","amigo-secreto","namorado"], pq:"Perfeita pra mala de Réveillon.", foto:"", link:"#", sub_id:"bio-0611-p013", datas:["reveillon"]},
+  {id:"p014", nome:"Smartwatch básico", preco:199, plataforma:"Amazon", pessoa:["namorado","pai","mae"], pq:"Conta passos, mostra mensagem e cabe no orçamento.", foto:"", link:"#", sub_id:"bio-0611-p014", datas:["blackfriday"]},
+  {id:"p015", nome:"Kit de chás importados", preco:55, plataforma:"Mercado Livre", pessoa:["sogra","avos","amigo-secreto"], pq:"A sogra que \"não precisa de nada\" vai usar.", foto:"", link:"#", sub_id:"bio-0611-p015", datas:["natal"]},
+  {id:"p016", nome:"Chinelo com nome bordado", preco:25, plataforma:"Shopee", pessoa:["amigo-secreto","mae","avos"], pq:"Até R$30 e personalizado.", foto:"", link:"#", sub_id:"bio-0611-p016", datas:["reveillon"]}
+];
+/* Guias: atalhos que aplicam um filtro */
+window.SP_GUIAS = [
+  {k:"Amigo secreto", t:"Até R$ 30 sem cara de lembrancinha", p:"amigo-secreto", preco:"30", tom:"g1"},
+  {k:"Sogra", t:"Pra sogra que diz que não precisa de nada", p:"sogra", preco:"", tom:"g2"},
+  {k:"Black Friday", t:"O que vale esperar até dia 27", data:"blackfriday", tom:"g3"},
+  {k:"Réveillon", t:"Mala, look e brinde da virada", data:"reveillon", tom:"g4"}
+];
+</script>
+
+<script>
+function SP_START(){
+  var C=window.SP_CONFIG, P=window.SP_PRODUTOS, G=window.SP_GUIAS||[];
+  var PESSOAS=[{id:"mae",l:"Mãe"},{id:"pai",l:"Pai"},{id:"sogra",l:"Sogra"},{id:"avos",l:"Avós"},{id:"namorado",l:"Namorado(a)"},{id:"amigo-secreto",l:"Amigo secreto"},{id:"pet",l:"Pet"},{id:"",l:"Qualquer um"}];
+  var PRECOS=[{id:"",l:"Tanto faz",min:0,max:Infinity},{id:"30",l:"R$30",min:0,max:30},{id:"50",l:"R$50",min:0,max:50},{id:"100",l:"R$100",min:0,max:100},{id:"100mais",l:"R$100+",min:100.01,max:Infinity}];
+  var DATAS={blackfriday:{dia:"2026-11-27",t:"Black Friday",pre:"para a"},natal:{dia:"2026-12-25",t:"Natal",pre:"para o"},reveillon:{dia:"2026-12-31",t:"Réveillon",pre:"para o"}};
+  var ARROW='<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  var q=new URLSearchParams(location.search);
+  var est={pessoa:q.get("p")||"",preco:q.get("preco")||"",data:q.get("data")||"",ordem:"preco"};
+
+  function track(ev,x){var o={event:ev};for(var k in x)o[k]=x[k];window.dataLayer.push(o);}
+  function brl(v){return "R$ "+Math.round(v).toLocaleString("pt-BR");}
+  function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+  function by(a,id){for(var i=0;i<a.length;i++)if(a[i].id===id)return a[i];return a[0];}
+  function h(s){var x=0;for(var i=0;i<s.length;i++)x=(x*31+s.charCodeAt(i))|0;return Math.abs(x);}
+  function match(p,f){var pr=by(PRECOS,f.preco);
+    if(f.pessoa&&p.pessoa.indexOf(f.pessoa)<0)return false;
+    if(p.preco<pr.min||p.preco>pr.max)return false;
+    if(f.data&&(p.datas||[]).indexOf(f.data)<0)return false;return true;}
+  function conta(f){return P.filter(function(p){return match(p,f);}).length;}
+  function cat(){var a=[];if(est.pessoa)a.push("pessoa:"+est.pessoa);if(est.preco)a.push("preco:"+est.preco);if(est.data)a.push("data:"+est.data);return a.join("|")||"todos";}
+
+  function card(p,c){
+    var ft=p.foto?'<img src="'+esc(p.foto)+'" alt="'+esc(p.nome)+'" loading="lazy">'
+      :'<div class="ph"><span class="pn">'+esc(p.nome)+'</span><span class="pl">Foto ilustrativa</span></div>';
+    return '<a class="card ver" href="'+esc(p.link)+'" target="_blank" rel="sponsored noopener" data-id="'+esc(p.id)+'" data-cat="'+esc(c)+'">'+
+      '<div class="ft t'+(h(p.id)%4+1)+'">'+ft+'<div class="badge"><span>'+esc(p.plataforma)+'</span></div>'+
+      (c==="destaque"&&p.rank?'<span class="rk"><small>Nº</small>'+p.rank+'</span>':'')+'</div>'+
+      '<div class="inf"><h3>'+esc(p.nome)+'</h3>'+(p.pq?'<p>'+esc(p.pq)+'</p>':'')+
+      '<div class="pr"><span class="v num">'+brl(p.preco)+'<small>aprox.</small></span><span class="go-sm">Ver oferta '+ARROW+'</span></div></div></a>';
+  }
+
+  var elP=document.getElementById("pessoas"), elS=document.getElementById("seg");
+  function renderConc(){
+    elP.innerHTML=PESSOAS.map(function(o){
+      var n=conta({pessoa:o.id,preco:"",data:""}), ps=P.filter(function(p){return !o.id||p.pessoa.indexOf(o.id)>=0;}).map(function(p){return p.preco;});
+      var faixa=ps.length?(Math.min.apply(0,ps)===Math.max.apply(0,ps)?brl(ps[0]):"R$"+Math.round(Math.min.apply(0,ps))+" a "+Math.round(Math.max.apply(0,ps))):"em breve";
+      return '<button type="button" class="pessoa" data-v="'+o.id+'" aria-pressed="'+(est.pessoa===o.id)+'"><span class="ck" aria-hidden="true"></span><span class="nm">'+o.l+'</span><span class="mt num">'+n+(n===1?' ideia':' ideias')+' · '+faixa+'</span></button>';
+    }).join("");
+    elS.innerHTML=PRECOS.map(function(o){
+      var n=conta({pessoa:est.pessoa,preco:o.id,data:est.data});
+      return '<button type="button" data-v="'+o.id+'" aria-pressed="'+(est.preco===o.id)+'"'+(n||est.preco===o.id?'':' disabled')+'><span class="v">'+o.l+'</span><span class="c num">'+n+'</span></button>';
+    }).join("");
+    var n=conta(est);
+    document.getElementById("goTxt").textContent=n?("Ver "+n+(n===1?" ideia":" ideias")):"Nada nessa combinação";
+    document.getElementById("pSel").textContent=est.pessoa?by(PESSOAS,est.pessoa).l:"Escolha uma pessoa";
+    document.getElementById("limpa").hidden=!(est.pessoa||est.preco||est.data);
+  }
+  elP.onclick=function(e){var b=e.target.closest(".pessoa");if(!b)return;var v=b.getAttribute("data-v");est.pessoa=(est.pessoa===v?"":v);track("filtro_vitrine",{filtro_tipo:"pessoa",filtro_valor:est.pessoa||"todos"});render(false);};
+  elS.onclick=function(e){var b=e.target.closest("button");if(!b||b.disabled)return;est.preco=b.getAttribute("data-v");track("filtro_vitrine",{filtro_tipo:"preco",filtro_valor:est.preco||"todos"});render(false);};
+  document.getElementById("go").onclick=function(){track("busca_vitrine",{categoria:cat()});render(true);};
+  document.getElementById("limpa").onclick=function(){est.pessoa=est.preco=est.data="";track("filtro_vitrine",{filtro_tipo:"limpar",filtro_valor:"todos"});render(false);};
+
+  function render(rolar){
+    renderConc();
+    var top=P.filter(function(p){return p.rank;}).sort(function(a,b){return a.rank-b.rank;}).slice(0,10);
+    document.getElementById("mais").hidden=!top.length;
+    document.getElementById("destaque").innerHTML=top.map(function(p){return card(p,"destaque");}).join("");
+
+    var l=P.filter(function(p){return match(p,est);}).sort(est.ordem==="rank"?function(a,b){return (a.rank||99)-(b.rank||99)||a.preco-b.preco;}:function(a,b){return a.preco-b.preco;});
+    var f=!!(est.pessoa||est.preco||est.data), partes=[];
+    if(est.pessoa)partes.push(by(PESSOAS,est.pessoa).l);
+    if(est.preco)partes.push(est.preco==="100mais"?"Acima de R$100":"Até "+by(PRECOS,est.preco).l);
+    if(est.data)partes.push(DATAS[est.data].t);
+    document.getElementById("lK").textContent=f?partes.join(" · "):"Catálogo";
+    document.getElementById("t-lista").innerHTML=f?(l.length+' <i>'+(l.length===1?'ideia':'ideias')+'</i> pra você'):'Todos os <i>presentes</i>';
+    var c=cat();
+    document.getElementById("lista").innerHTML=l.length?l.map(function(p){return card(p,c);}).join(""):
+      '<div class="vazio"><h3>Ainda não temos essa combinação.</h3><p>Tente outro orçamento, ou peça no grupo que a gente procura pra você.</p><a class="btn-sm zapLink" data-local="lista_vazia" href="'+esc(C.WHATSAPP_URL)+'" target="_blank" rel="noopener"><span class="dot"></span>Pedir no grupo</a></div>';
+    document.querySelectorAll(".ordem button").forEach(function(b){b.setAttribute("aria-pressed",String(b.getAttribute("data-o")===est.ordem));});
+    var u=new URLSearchParams();if(est.pessoa)u.set("p",est.pessoa);if(est.preco)u.set("preco",est.preco);if(est.data)u.set("data",est.data);
+    try{history.replaceState(null,"",location.pathname+(u.toString()?"?"+u:"")+location.hash);}catch(e){}
+    if(rolar)document.getElementById("lista-sec").scrollIntoView({behavior:"smooth",block:"start"});
+  }
+  document.querySelectorAll(".ordem button").forEach(function(b){b.onclick=function(){est.ordem=b.getAttribute("data-o");track("ordem_vitrine",{ordem:est.ordem});render(false);};});
+
+  /* Guias */
+  document.getElementById("guiasL").innerHTML=G.map(function(g,i){
+    var n=conta({pessoa:g.p||"",preco:g.preco||"",data:g.data||""});
+    return '<button type="button" class="guia '+g.tom+'" data-i="'+i+'"><div><span class="k">'+esc(g.k)+'</span><h3>'+esc(g.t)+'</h3></div><div class="ft2"><span class="num">'+n+(n===1?' ideia':' ideias')+'</span><span aria-hidden="true">'+ARROW+'</span></div></button>';
+  }).join("");
+  document.getElementById("guiasL").onclick=function(e){var b=e.target.closest(".guia");if(!b)return;var g=G[+b.getAttribute("data-i")];
+    est.pessoa=g.p||"";est.preco=g.preco||"";est.data=g.data||"";track("filtro_vitrine",{filtro_tipo:"guia",filtro_valor:g.k});render(true);};
+
+  /* Setas do trilho */
+  document.querySelectorAll(".setas button").forEach(function(b){b.onclick=function(){var t=document.getElementById("destaque");t.scrollBy({left:(+b.getAttribute("data-d"))*t.clientWidth*.8,behavior:"smooth"});};});
+
+  /* Cliques */
+  document.addEventListener("click",function(e){
+    var a=e.target.closest(".ver[data-id]");
+    if(a){var p=P.filter(function(x){return x.id===a.getAttribute("data-id");})[0];if(p)track("clique_oferta",{categoria:a.getAttribute("data-cat"),produto_id:p.id,produto_nome:p.nome,plataforma:p.plataforma,preco_aprox:p.preco,sub_id:p.sub_id||""});return;}
+    var z=e.target.closest(".zapLink");if(z)track("clique_whatsapp",{local:z.getAttribute("data-local")||""});
+  });
+
+  /* Contagem e faixa de aviso */
+  var d=DATAS[C.DATA_ATIVA];
+  if(d){var hoje=new Date();hoje.setHours(0,0,0,0);var dias=Math.round((new Date(d.dia+"T00:00:00")-hoje)/864e5);
+    if(dias>=0){
+      document.getElementById("conta").hidden=false;
+      document.getElementById("cD").textContent=dias===0?"Hoje":dias;
+      document.getElementById("cT").textContent=dias===0?"é dia de":(dias===1?"dia ":"dias ")+d.pre;
+      document.getElementById("cTT").textContent=d.t;
+      document.getElementById("cBtn").onclick=function(){est.data=C.DATA_ATIVA;est.pessoa=est.preco="";track("filtro_vitrine",{filtro_tipo:"data",filtro_valor:est.data});render(true);};
+      document.getElementById("aviso").hidden=false;
+      document.getElementById("avisoTxt").innerHTML=(dias===0?"<b>É hoje: "+d.t+".</b>":"<b>"+d.t+" em "+dias+(dias===1?" dia.":" dias.")+"</b>")+" <span class=\"av-l\">Receba as ofertas primeiro no grupo</span><span class=\"av-s\">Entre no grupo de ofertas</span>";
+    }}
+
+  document.querySelectorAll(".zapLink").forEach(function(a){a.href=C.WHATSAPP_URL;});
+  var t=document.getElementById("lnkTiktok"),i=document.getElementById("lnkInsta");t.href=C.TIKTOK_URL;i.href=C.INSTAGRAM_URL;
+  t.addEventListener("click",function(){track("clique_rede",{rede:"tiktok"});});i.addEventListener("click",function(){track("clique_rede",{rede:"instagram"});});
+
+  var topo=document.getElementById("topo"),flt=document.getElementById("flt"),hero=document.querySelector(".hero"),grupo=document.querySelector(".grupo"),perto=false;
+  function onS(){topo.classList.toggle("linha",scrollY>40);flt.classList.toggle("off",perto||scrollY<hero.offsetTop+hero.offsetHeight-80);}
+  addEventListener("scroll",onS,{passive:true});
+  if("IntersectionObserver" in window)new IntersectionObserver(function(es){es.forEach(function(e){perto=e.isIntersecting;onS();});}).observe(grupo);
+  render(false);onS();
+  track("vitrine_carregada",{filtro_inicial:cat()});
+}
+/* Carrega os produtos da planilha do Google (se configurada); se falhar, usa a lista acima */
+(function(){
+  var url=window.SP_CONFIG.PLANILHA_CSV;
+  if(!url){ SP_START(); return; }
+  function parseCSV(t){var r=[],row=[],f="",q=false;for(var i=0;i<t.length;i++){var c=t[i];
+    if(q){if(c=='"'){if(t[i+1]=='"'){f+='"';i++;}else q=false;}else f+=c;}
+    else if(c=='"')q=true;else if(c==','){row.push(f);f="";}else if(c=='\n'){row.push(f);r.push(row);row=[];f="";}else if(c!='\r')f+=c;}
+    if(f||row.length){row.push(f);r.push(row);}return r;}
+  function lista(s){return String(s||"").split(/[,;]/).map(function(x){return x.trim().toLowerCase();}).filter(Boolean);}
+  var ok=false, t=setTimeout(function(){ if(!ok){ ok=true; SP_START(); } },4000);
+  fetch(url,{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.text();}).then(function(txt){
+    if(ok)return; var rows=parseCSV(txt), h=rows.shift().map(function(x){return x.trim().toLowerCase();});
+    var out=rows.map(function(c){var o={};h.forEach(function(k,i){o[k]=(c[i]||"").trim();});return o;})
+      .filter(function(o){var st=(o.status||"").toLowerCase();return o.id&&o.nome&&o.preco&&(st==="ativo"||st==="exemplo");})
+      .map(function(o){return {id:o.id,nome:o.nome,plataforma:o.plataforma,preco:parseFloat(String(o.preco).replace(/[^0-9,\.]/g,"").replace(",","."))||0,
+        pessoa:lista(o.pessoa),datas:lista(o.datas),rank:parseInt(o.rank,10)||undefined,pq:o.por_que_vale,foto:o.foto,link:o.link_afiliado||"#",sub_id:o.sub_id};});
+    if(out.length) window.SP_PRODUTOS=out;
+    ok=true; clearTimeout(t); SP_START();
+  }).catch(function(){ if(!ok){ ok=true; clearTimeout(t); SP_START(); } });
+})();
+</script>
+</body>
+</html>
