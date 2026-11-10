@@ -25,6 +25,13 @@
    ========================================================= */
 window.SP_CONFIG = {
   GTM_ID: "",                       // ex.: "GTM-ABC1234" (vazio = GTM desligado)
+  // Vercel Web Analytics (visitas, páginas, origem, país, celular x computador). Grátis no plano Hobby.
+  // Só funciona depois de clicar em "Enable" na aba Analytics do projeto na Vercel.
+  VERCEL_ANALYTICS: true,
+  VERCEL_ANALYTICS_SRC: "/_vercel/insights/script.js", // se o painel mostrar outro caminho, troque aqui
+  VERCEL_EVENTOS: false,            // true só no plano Pro: manda os cliques como "custom events" para a Vercel
+  // Google Analytics 4 (grátis, conta cliques por produto/loja). Ex.: "G-ABC123XYZ" (vazio = desligado)
+  GA4_ID: "",
   WHATSAPP_URL: "https://chat.whatsapp.com/EndlOMvXSzQENBRWj8NNNy",
   TIKTOK_URL: "https://www.tiktok.com/@socorropresente_",
   INSTAGRAM_URL: "https://www.instagram.com/socorropresente_/",
@@ -40,6 +47,20 @@ window.dataLayer = window.dataLayer || [];
   s.src='https://www.googletagmanager.com/gtm.js?id='+id;
   document.head.appendChild(s);
 })(window.SP_CONFIG.GTM_ID);
+(function(C){
+  if(C.VERCEL_ANALYTICS){
+    window.va = window.va || function(){ (window.vaq = window.vaq || []).push(arguments); };
+    var v=document.createElement('script'); v.defer=true; v.src=C.VERCEL_ANALYTICS_SRC;
+    document.head.appendChild(v);
+  }
+  if(C.GA4_ID){
+    window.gtag = function(){ dataLayer.push(arguments); };
+    gtag('js', new Date()); gtag('config', C.GA4_ID);
+    var g=document.createElement('script'); g.async=true;
+    g.src='https://www.googletagmanager.com/gtag/js?id='+C.GA4_ID;
+    document.head.appendChild(g);
+  }
+})(window.SP_CONFIG);
 </script>
 
 <style>
@@ -478,7 +499,18 @@ function SP_START(){
   var q=new URLSearchParams(location.search);
   var est={pessoa:q.get("p")||"",preco:q.get("preco")||"",data:q.get("data")||"",ordem:"preco"};
 
-  function track(ev,x){var o={event:ev};for(var k in x)o[k]=x[k];window.dataLayer.push(o);}
+  function track(ev,x){
+    var o={event:ev};for(var k in x)o[k]=x[k];window.dataLayer.push(o);
+    try{
+      if(C.GA4_ID&&window.gtag)window.gtag("event",ev,x||{});
+      if(C.VERCEL_EVENTOS&&window.va){
+        // Vercel Pro aceita só 2 propriedades por evento: produto e loja
+        var d={};if(x&&x.produto_id)d.produto=String(x.produto_id+" "+(x.produto_nome||"")).slice(0,255);
+        if(x&&x.plataforma)d.loja=x.plataforma;else if(x&&x.rede)d.loja=x.rede;
+        window.va("event",{name:ev,data:d});
+      }
+    }catch(e){}
+  }
   function brl(v){return "R$ "+Math.round(v).toLocaleString("pt-BR");}
   function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
   function by(a,id){for(var i=0;i<a.length;i++)if(a[i].id===id)return a[i];return a[0];}
